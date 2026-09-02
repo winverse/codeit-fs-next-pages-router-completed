@@ -1,4 +1,4 @@
-import MovieDetail from "@/components/MovieDetail";
+import { MovieDetail } from "@/components/MovieDetail";
 import { fetchMovies, fetchOneMovie } from "@/lib/movie.server";
 import Head from "next/head";
 import { useRouter } from "next/router";

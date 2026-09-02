@@ -1,1 +1,1 @@
-export { default } from "./GlobalLayout";
+export { default as GlobalLayout } from "./GlobalLayout";

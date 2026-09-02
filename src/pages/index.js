@@ -1,5 +1,5 @@
-import MovieItem from "@/components/MovieItem";
-import SearchLayout from "@/components/layouts/SearchLayout";
+import { MovieItem } from "@/components/MovieItem";
+import { SearchLayout } from "@/components/layouts/SearchLayout";
 import { fetchMovies, fetchNowPlayingMovies } from "@/lib/movie.server";
 import * as styles from "@/styles/home.css.js";
 import Head from "next/head";

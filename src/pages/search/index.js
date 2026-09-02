@@ -1,5 +1,5 @@
-import MovieItem from "@/components/MovieItem";
-import SearchLayout from "@/components/layouts/SearchLayout";
+import { MovieItem } from "@/components/MovieItem";
+import { SearchLayout } from "@/components/layouts/SearchLayout";
 import { fetchSearchMovies } from "@/lib/movie.client";
 import Head from "next/head";
 import { useRouter } from "next/router";
