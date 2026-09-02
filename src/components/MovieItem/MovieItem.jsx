@@ -15,7 +15,7 @@ export default function MovieItem({
     typeof voteAverage === "number" ? voteAverage.toFixed(1) : "평점 없음";
 
   return (
-    <Link href={`/movie/${id}`} className={styles.container}>
+    <Link href={`/movies/${id}`} className={styles.container}>
       {hasPoster ? (
         <Image
           src={posterPath}

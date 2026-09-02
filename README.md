@@ -38,7 +38,7 @@ pnpm dev
 
 - `http://localhost:3000`: 홈
 - `http://localhost:3000/search?q=인셉션`: 검색
-- `http://localhost:3000/movie/1`: 상세
+- `http://localhost:3000/movies/1`: 상세
 
 프로덕션 동작을 확인할 때도 지원 백엔드를 실행한 상태로 유지합니다.
 

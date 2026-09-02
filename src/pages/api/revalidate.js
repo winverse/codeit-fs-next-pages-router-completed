@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   const path = req.body?.path;
   const isAllowedPath =
     path === "/" ||
-    (typeof path === "string" && /^\/movie\/[1-9]\d*$/.test(path));
+    (typeof path === "string" && /^\/movies\/[1-9]\d*$/.test(path));
 
   if (!isAllowedPath) {
     return res.status(400).json({ message: "Invalid path" });
