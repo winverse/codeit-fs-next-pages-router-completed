@@ -33,7 +33,7 @@ export default function SearchPage() {
   }, [query, router.isReady]);
 
   let status = "success";
-  if (!router.isReady || !query) status = "idle";
+  if (!query) status = "idle";
   else if (result.query !== query) status = "loading";
   else if (result.error) status = "error";
 
