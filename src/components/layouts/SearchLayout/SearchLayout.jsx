@@ -4,18 +4,13 @@ import * as styles from "./SearchLayout.css.js";
 
 export default function SearchLayout({ children }) {
   const router = useRouter();
-  const query = typeof router.query.q === "string" ? router.query.q : "";
-  const [previousQuery, setPreviousQuery] = useState(query);
-  const [search, setSearch] = useState(query);
+  const [search, setSearch] = useState("");
 
-  if (previousQuery !== query) {
-    setPreviousQuery(query);
-    setSearch(query);
-  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  const handleSubmit = () => {
     const nextQuery = search.trim();
-    if (!nextQuery || nextQuery === query) return;
+    if (!nextQuery) return;
 
     router.push({
       pathname: "/search",
@@ -23,25 +18,20 @@ export default function SearchLayout({ children }) {
     });
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") handleSubmit();
-  };
-
   return (
     <>
-      <div className={styles.container}>
+      <form className={styles.container} onSubmit={handleSubmit}>
         <input
           aria-label="영화 검색어"
           className={styles.input}
           value={search}
           onChange={(event) => setSearch(event.target.value)}
-          onKeyDown={handleKeyDown}
           placeholder="검색어를 입력하세요"
         />
-        <button type="button" className={styles.button} onClick={handleSubmit}>
+        <button type="submit" className={styles.button}>
           검색
         </button>
-      </div>
+      </form>
       {children}
     </>
   );
