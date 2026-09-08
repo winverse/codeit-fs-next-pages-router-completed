@@ -4,11 +4,8 @@ if (!API_URL) {
   throw new Error("API_URL 환경 변수가 필요합니다.");
 }
 
-export async function fetchMovies({ query } = {}) {
-  const url = query
-    ? `${API_URL}/api/movies/search?q=${encodeURIComponent(query)}`
-    : `${API_URL}/api/movies`;
-  const response = await fetch(url);
+export async function fetchMovies() {
+  const response = await fetch(`${API_URL}/api/movies`);
   if (!response.ok) {
     throw new Error(`API 요청 실패: ${response.status}`);
   }
