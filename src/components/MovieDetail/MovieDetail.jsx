@@ -17,6 +17,12 @@ export default function MovieDetail({
     genres?.map((genre) => genre.name).join(", ") || "장르 정보 없음";
   const formattedVoteAverage =
     typeof voteAverage === "number" ? voteAverage.toFixed(1) : "평점 없음";
+  const metaInfo = [
+    releaseDate || "개봉일 미정",
+    genreNames,
+    runtime || "상영 시간 미정",
+    formattedVoteAverage,
+  ].join(" | ");
   const coverStyle = hasPoster
     ? { backgroundImage: `url('${posterPath}')` }
     : undefined;
@@ -45,10 +51,7 @@ export default function MovieDetail({
 
       <div className={styles.infoContainer}>
         <div className={styles.title}>{title}</div>
-        <div>
-          {releaseDate || "개봉일 미정"} | {genreNames} |{" "}
-          {runtime || "상영 시간 미정"} | {formattedVoteAverage}
-        </div>
+        <div>{metaInfo}</div>
         {tagline && <div className={styles.tagline}>{tagline}</div>}
         <div className={styles.overview}>
           {overview || "줄거리 정보가 없습니다."}
