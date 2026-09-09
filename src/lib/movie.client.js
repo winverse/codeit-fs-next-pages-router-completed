@@ -4,11 +4,11 @@ if (!API_URL) {
   throw new Error("NEXT_PUBLIC_API_URL 환경 변수가 필요합니다.");
 }
 
-export async function fetchSearchMovies(query, signal) {
+export async function fetchSearchMovies(query) {
   const url = new URL("/api/movies/search", API_URL);
   url.searchParams.set("q", query);
 
-  const response = await fetch(url, { signal });
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`검색 요청 실패: ${response.status}`);
   }

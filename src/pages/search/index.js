@@ -8,34 +8,31 @@ import { useEffect, useState } from "react";
 export default function SearchPage() {
   const router = useRouter();
   const query = typeof router.query.q === "string" ? router.query.q : "";
-  const [result, setResult] = useState({
-    query: "",
-    movies: [],
-    error: null,
-  });
+  const [status, setStatus] = useState("idle");
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    if (!router.isReady || !query) return undefined;
+    if (!router.isReady) return;
 
-    const controller = new AbortController();
+    if (!query) {
+      setStatus("idle");
+      setMovies([]);
+      return;
+    }
 
-    fetchSearchMovies(query, controller.signal)
+    setStatus("loading");
+
+    fetchSearchMovies(query)
       .then((data) => {
-        setResult({ query, movies: data, error: null });
+        setMovies(data);
+        setStatus("success");
       })
       .catch((error) => {
-        if (error.name === "AbortError") return;
         console.error(error);
-        setResult({ query, movies: [], error });
+        setMovies([]);
+        setStatus("error");
       });
-
-    return () => controller.abort();
   }, [query, router.isReady]);
-
-  let status = "success";
-  if (!query) status = "idle";
-  else if (result.query !== query) status = "loading";
-  else if (result.error) status = "error";
 
   return (
     <>
@@ -50,12 +47,12 @@ export default function SearchPage() {
       </Head>
       {status === "loading" && <p>검색 중입니다.</p>}
       {status === "error" && <p>검색 결과를 불러오지 못했습니다.</p>}
-      {status === "success" && result.movies.length === 0 && (
+      {status === "success" && movies.length === 0 && (
         <p>검색 결과가 없습니다.</p>
       )}
       {status === "success" && (
         <div>
-          {result.movies.map((movie) => (
+          {movies.map((movie) => (
             <MovieItem key={movie.id} {...movie} />
           ))}
         </div>
