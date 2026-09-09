@@ -29,7 +29,7 @@
 먼저 지원 백엔드를 `http://localhost:5005`에서 실행합니다. 그다음 환경 변수 파일을 준비하고 완성본을 실행합니다.
 
 ```bash
-cp .env.example .env.local
+cp .env.example .env.development
 pnpm install
 pnpm dev
 ```
@@ -38,11 +38,12 @@ pnpm dev
 
 - `http://localhost:3000`: 홈
 - `http://localhost:3000/search?q=인셉션`: 검색
-- `http://localhost:3000/movies/1`: 상세
+- 홈에서 영화를 선택하면 이동하는 `http://localhost:3000/movies/<id>`: 상세
 
-프로덕션 동작을 확인할 때도 지원 백엔드를 실행한 상태로 유지합니다.
+프로덕션 동작을 확인할 때는 `.env.production`도 준비하고 지원 백엔드를 실행한 상태로 유지합니다.
 
 ```bash
+cp .env.example .env.production
 pnpm build
 pnpm start
 ```
