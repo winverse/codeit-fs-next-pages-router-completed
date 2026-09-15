@@ -13,6 +13,17 @@ export async function fetchMovies() {
   return data.movies;
 }
 
+export async function fetchSearchMovies(searchQuery) {
+  const response = await fetch(
+    `${API_URL}/api/movies/search?q=${encodeURIComponent(searchQuery)}`,
+  );
+  if (!response.ok) {
+    throw new Error(`API 요청 실패: ${response.status}`);
+  }
+  const data = await response.json();
+  return data.movies;
+}
+
 export async function fetchNowPlayingMovies() {
   const response = await fetch(`${API_URL}/api/movies/now-playing`);
   if (!response.ok) {
