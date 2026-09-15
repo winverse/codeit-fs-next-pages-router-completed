@@ -8,29 +8,35 @@ import { useEffect, useState } from "react";
 export default function SearchPage() {
   const router = useRouter();
   const query = typeof router.query.q === "string" ? router.query.q : "";
-  const [status, setStatus] = useState("idle");
-  const [movies, setMovies] = useState([]);
+  const [results, setResults] = useState({});
+  const result = results[query];
+
+  let status = "loading";
+  if (!query) {
+    status = "idle";
+  } else if (result) {
+    status = result.status;
+  }
+  const movies = result ? result.movies : [];
 
   useEffect(() => {
-    if (!router.isReady) return;
-
-    if (!query) {
-      setStatus("idle");
-      setMovies([]);
+    if (!router.isReady || !query) {
       return;
     }
 
-    setStatus("loading");
-
     fetchSearchMovies(query)
       .then((data) => {
-        setMovies(data);
-        setStatus("success");
+        setResults((prev) => ({
+          ...prev,
+          [query]: { status: "success", movies: data },
+        }));
       })
       .catch((error) => {
         console.error(error);
-        setMovies([]);
-        setStatus("error");
+        setResults((prev) => ({
+          ...prev,
+          [query]: { status: "error", movies: [] },
+        }));
       });
   }, [query, router.isReady]);
 
