@@ -8,16 +8,8 @@ import { useEffect, useState } from "react";
 export default function SearchPage() {
   const router = useRouter();
   const query = typeof router.query.q === "string" ? router.query.q : "";
-  const [results, setResults] = useState({});
-  const result = results[query];
-
-  let status = "loading";
-  if (!query) {
-    status = "idle";
-  } else if (result) {
-    status = result.status;
-  }
-  const movies = result ? result.movies : [];
+  const [movies, setMovies] = useState(null);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     if (!router.isReady || !query) {
@@ -26,17 +18,12 @@ export default function SearchPage() {
 
     fetchSearchMovies(query)
       .then((data) => {
-        setResults((prev) => ({
-          ...prev,
-          [query]: { status: "success", movies: data },
-        }));
+        setMovies(data);
+        setHasError(false);
       })
       .catch((error) => {
         console.error(error);
-        setResults((prev) => ({
-          ...prev,
-          [query]: { status: "error", movies: [] },
-        }));
+        setHasError(true);
       });
   }, [query, router.isReady]);
 
@@ -51,12 +38,11 @@ export default function SearchPage() {
           content="영화 제목으로 검색한 결과를 확인합니다."
         />
       </Head>
-      {status === "loading" && <p>검색 중입니다.</p>}
-      {status === "error" && <p>검색 결과를 불러오지 못했습니다.</p>}
-      {status === "success" && movies.length === 0 && (
+      {query && hasError && <p>검색 결과를 불러오지 못했습니다.</p>}
+      {query && !hasError && movies && movies.length === 0 && (
         <p>검색 결과가 없습니다.</p>
       )}
-      {status === "success" && (
+      {query && !hasError && movies && (
         <div>
           {movies.map((movie) => (
             <MovieItem key={movie.id} {...movie} />
