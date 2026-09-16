@@ -22,7 +22,6 @@ export default function SearchLayout({ children }) {
     <>
       <form className={styles.container} onSubmit={handleSubmit}>
         <input
-          aria-label="영화 검색어"
           className={styles.input}
           value={search}
           onChange={(event) => setSearch(event.target.value)}
