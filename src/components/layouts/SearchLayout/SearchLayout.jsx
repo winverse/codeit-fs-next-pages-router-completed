@@ -10,7 +10,9 @@ export default function SearchLayout({ children }) {
     event.preventDefault();
 
     const nextQuery = search.trim();
-    if (!nextQuery) return;
+    if (!nextQuery) {
+      return;
+    }
 
     router.push({
       pathname: "/search",
